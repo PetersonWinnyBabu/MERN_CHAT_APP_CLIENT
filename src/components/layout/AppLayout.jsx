@@ -156,7 +156,7 @@ const AppLayout = () => (WrappedComponent) => {
             sx={{
               display: { xs: "block", sm: "block" },
             }}
-            height={"100vh"}
+            height="90%"
           >
             <WrappedComponent
               {...props}
