@@ -154,7 +154,7 @@ const AppLayout = () => (WrappedComponent) => {
           <Grid
             size={{ xs: 12, sm: 8, md: 5, lg: 6 }}
             sx={{
-              display: { xs: "none", sm: "block" },
+              display: { xs: "block", sm: "block" },
             }}
             height={"100%"}
           >
