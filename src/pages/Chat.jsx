@@ -167,48 +167,50 @@ const Chat = ({ chatId, user, socket: socketFromProp }) => {
   //   });
   // }, [oldMessages]);
 
-  // const newMessageHandler = useCallback(
-  //   (data) => {
-  //     if (data.chatId !== chatId) return;
-
-  //     // setMessages((prev) => [...prev, data.message]);
-
-  //     setMessages((prev) => {
-  //       const exist = prev.find((m) => m._id === data.message._id);
-  //       if (exist) return prev;
-  //       return [...prev, data.message];
-  //     });
-  //   },
-  //   [chatId],
-  // );
   const newMessageHandler = useCallback(
     (data) => {
       if (data.chatId !== chatId) return;
 
+      // setMessages((prev) => [...prev, data.message]);
+
       setMessages((prev) => {
-        // If incoming message matches an optimistic temp message, replace it
-        const index = prev.findIndex(
-          (m) =>
-            m._id === data.tempId ||
-            (m._id.startsWith("temp-") &&
-              m.content === data.message.content &&
-              m.sender._id === data.message.sender._id),
-        );
-
-        if (index !== -1) {
-          const updated = [...prev];
-          updated[index] = data.message;
-          return updated;
-        }
-
-        // Avoid adding duplicate IDs
-        if (prev.some((m) => m._id === data.message._id)) return prev;
-
+        const exist = prev.find((m) => m._id === data.message._id);
+        if (exist) return prev;
         return [...prev, data.message];
       });
     },
     [chatId],
   );
+
+
+  // const newMessageHandler = useCallback(
+  //   (data) => {
+  //     if (data.chatId !== chatId) return;
+
+  //     setMessages((prev) => {
+  //       // If incoming message matches an optimistic temp message, replace it
+  //       const index = prev.findIndex(
+  //         (m) =>
+  //           m._id === data.tempId ||
+  //           (m._id.startsWith("temp-") &&
+  //             m.content === data.message.content &&
+  //             m.sender._id === data.message.sender._id),
+  //       );
+
+  //       if (index !== -1) {
+  //         const updated = [...prev];
+  //         updated[index] = data.message;
+  //         return updated;
+  //       }
+
+  //       // Avoid adding duplicate IDs
+  //       if (prev.some((m) => m._id === data.message._id)) return prev;
+
+  //       return [...prev, data.message];
+  //     });
+  //   },
+  //   [chatId],
+  // );
 
   const startTypingListener = useCallback(
     (data) => {
